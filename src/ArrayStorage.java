@@ -41,7 +41,7 @@ public class ArrayStorage {
             storage[size - 1] = null;
             size--;
         } else {
-            System.out.println("The resume " + uuid + " isn't exist");
+            System.out.println("The resume " + uuid + " isn't exist.");
         }
     }
 
