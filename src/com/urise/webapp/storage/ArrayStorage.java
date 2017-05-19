@@ -1,19 +1,23 @@
+package com.urise.webapp.storage;
+
+import com.urise.webapp.model.Resume;
+
 /**
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    public final static int STORAGE_MAX_LENGTH = 10000;
-    Resume[] storage = new Resume[STORAGE_MAX_LENGTH];
-    int size = 0;
+    private final static int STORAGE_MAX_LENGTH = 10000;
+    private Resume[] storage = new Resume[STORAGE_MAX_LENGTH];
+    private int size = 0;
 
-    void clear() {
+    public void clear() {
         for (int i = 0; i < size; i++) {
             storage[i] = null;
         }
         size = 0;
     }
 
-    void save(Resume r) {
+    public void save(Resume r) {
         if (size == STORAGE_MAX_LENGTH - 1) {
             System.out.println("The storage is full.");
         }
@@ -24,17 +28,16 @@ public class ArrayStorage {
         size++;
     }
 
-    Resume get(String uuid) {
+    public Resume get(String uuid) {
         int index = getIndex(uuid);
         if (index > -1) {
-            Resume resume = storage[index];
-            return resume;
+            return storage[index];          //Resume resume = storage[index];
         }
         System.out.println("A resume " + uuid + " is absent.");
         return null;
     }
 
-    void delete(String uuid) {
+    public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index > -1) {
             storage[index] = storage[size - 1];
@@ -48,15 +51,15 @@ public class ArrayStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    Resume[] getAll() {
+    public Resume[] getAll() {
         Resume[] resumes = new Resume[size];
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {    // System.arraycopy(storage, 0, resumes, 0, size);
             resumes[i] = storage[i];
         }
         return resumes;
     }
 
-    int size() {
+    public int size() {
         return size;
     }
 
