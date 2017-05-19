@@ -28,6 +28,16 @@ public class ArrayStorage {
         size++;
     }
 
+    public void update(Resume resume) {
+        int index = getIndex(resume.getUuid());
+        if (index > -1) {
+            storage[index] = resume;
+            return;
+        }
+        System.out.println("A resume " + resume + " is absent." +
+                " That's why it can't be update.");
+    }
+
     public Resume get(String uuid) {
         int index = getIndex(uuid);
         if (index > -1) {
