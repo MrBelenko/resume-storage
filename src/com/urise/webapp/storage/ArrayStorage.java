@@ -8,8 +8,10 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private final static int STORAGE_MAX_LENGTH = 10000;
-    private Resume[] storage = new Resume[STORAGE_MAX_LENGTH];
+
+
+    private static final int STORAGE_LIMIT = 10000;
+    private Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size = 0;
 
     public void clear() {
@@ -22,7 +24,7 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        if (size == STORAGE_MAX_LENGTH - 1) {
+        if (size == STORAGE_LIMIT - 1) {
             System.out.println("The storage is full.");
         }
         if (getIndex(r.getUuid()) > -1) {
