@@ -9,36 +9,30 @@ import java.util.Arrays;
  */
 public class SortedArrayStorage extends AbstractArrayStorage {
 
-
     @Override
-    public void clear() {
-
+    protected void doDelete(int index) {
+        for (int i = index; i < size ; i++) {
+            storage[i] = storage[i + 1];
+        }
     }
 
     @Override
-    public void save(Resume r) {
-
-    }
-
-    @Override
-    public void update(Resume resume) {
-
-    }
-
-    @Override
-    public void delete(String uuid) {
-
-    }
-
-    @Override
-    public Resume[] getAll() {
-        return new Resume[0];
+    protected void doSave(Resume r, int index) {
+        if (size == 0){
+            storage[0] = r;
+        }else {
+            int insertIdx = -index - 1;
+            for (int i = 0; i < size - insertIdx; i++) {
+                storage[size - i] = storage[size - i - 1];
+            }
+            storage[insertIdx] = r;
+        }
     }
 
     @Override
     protected int getIndex(String uuid) {
-        Resume searchKey = new Resume();
-        searchKey.setUuid(uuid);
+        Resume searchKey = new Resume(uuid);
         return Arrays.binarySearch(storage, 0, size, searchKey);
     }
+
 }
