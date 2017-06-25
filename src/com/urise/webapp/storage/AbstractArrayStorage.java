@@ -1,5 +1,8 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.ExistStorageException;
+import com.urise.webapp.exception.NotExistStorageException;
+import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -26,15 +29,16 @@ public abstract class AbstractArrayStorage implements Storage {
             doDelete(index);
             size--;
         } else {
-            System.out.println("The resume " + uuid + " isn't exist.");
+            throw new NotExistStorageException(uuid);
+//            System.out.println("The resume " + uuid + " isn't exist.");
         }
     }
     public void save(Resume r) {
         int index = getIndex(r.getUuid());
         if (index > -1) {
-            //throw new ExistStorageException(r.getUuid());
+            throw new ExistStorageException(r.getUuid());
         } else if (size == STORAGE_LIMIT) {
-            //throw new StorageException("Storage overflow", r.getUuid());
+            throw new StorageException("Storage overflow", r.getUuid());
         } else {
             doSave(r, index);
             size++;
@@ -42,15 +46,15 @@ public abstract class AbstractArrayStorage implements Storage {
 
     }
 
-
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index > -1) {
             storage[index] = resume;
             return;
         }
-        System.out.println("A resume " + resume + " is absent." +
-                " That's why it can't be update.");
+        throw new NotExistStorageException(resume.getUuid());
+//        System.out.println("A resume " + resume + " is absent." +
+//                " That's why it can't be update.");
     }
 
     public Resume get(String uuid) {
@@ -58,8 +62,9 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index > -1) {
             return storage[index];          //Resume resume = storage[index];
         }
-        System.out.println("A resume " + uuid + " is absent.");
-        return null;
+        throw new NotExistStorageException(uuid);
+//        System.out.println("A resume " + uuid + " is absent.");
+//        return null;
     }
 
     public Resume[] getAll() {

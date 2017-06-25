@@ -1,8 +1,8 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.model.Resume;
+        import com.urise.webapp.model.Resume;
 
-import java.util.Arrays;
+        import java.util.Arrays;
 
 /**
  * Created by Pavlo on 21/05/2017.
@@ -15,6 +15,11 @@ public class SortedArrayStorage extends AbstractArrayStorage {
             storage[i] = storage[i + 1];
         }
     }
+//    protected void doDelete(int index) {
+//        int numMoved = size - index - 1;
+//        if (numMoved > 0) {
+//            System.arraycopy(storage, index + 1, storage, index, numMoved);
+//        }
 
     @Override
     protected void doSave(Resume r, int index) {
@@ -28,6 +33,12 @@ public class SortedArrayStorage extends AbstractArrayStorage {
             storage[insertIdx] = r;
         }
     }
+//    protected void doSave(Resume r, int index) {
+////      http://codereview.stackexchange.com/questions/36221/binary-search-for-inserting-in-array#answer-36239
+//        int insertIdx = -index - 1;
+//        System.arraycopy(storage, insertIdx, storage, insertIdx + 1, size - insertIdx);
+//        storage[insertIdx] = r;
+//    }
 
     @Override
     protected int getIndex(String uuid) {
